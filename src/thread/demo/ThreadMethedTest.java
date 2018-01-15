@@ -15,12 +15,12 @@ public class ThreadMethedTest {
         t1.start();
         t2.start();
 
-//        try {
-//            t2.join();
-//            System.out.println("complete");
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            t2.join();
+            System.out.println("complete");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         System.out.println("complete");
 
     }
