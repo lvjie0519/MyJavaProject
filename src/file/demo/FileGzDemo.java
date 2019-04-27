@@ -18,22 +18,24 @@ public class FileGzDemo {
         System.out.println("hello world");
 
 
-        String fileUrl = "https://raw.githubusercontent.com/lvjie0519/MRNStudyProject/master/app/src/main/res/mipmap-mdpi/ic_launcher_round.png";
-        String fileAbsolutePath = "C:\\lvjie\\MyProject\\MyJavaProject\\src\\file\\demo\\res\\abc.jpg";
+//        String fileUrl = "https://raw.githubusercontent.com/lvjie0519/MRNStudyProject/master/app/src/main/res/mipmap-mdpi/ic_launcher_round.png";
+        String fileUrl = "https://raw.githubusercontent.com/lvjie0519/MyJavaProject/master/src/file/demo/res/13";
+        String fileAbsolutePath = "C:\\lvjie\\MyProject\\MyJavaProject\\src\\file\\demo\\res\\aaa";
 //        String fileAbsolutePath = "C:\\lvjie\\MyProject\\MyJavaProject\\src\\file\\demo\\res\\13";
-        downloadFile(fileUrl, null, fileAbsolutePath, 6000, 6000);
+//        downloadFile(fileUrl, null, fileAbsolutePath, 6000, 6000);
 
+        byte[] bytes = readGzFile(fileAbsolutePath);
 //        byte[] bytes = readFile(fileAbsolutePath);
-//
-//        System.out.println("file length is "+bytes.length);
-//        int length = bytes.length;
-//        for(int i=0; i<length; i++){
-//            if(i%10==0){
-//                System.out.println(bytes[i]);
-//            }else{
-//                System.out.print(bytes[i]+"  ");
-//            }
-//        }
+
+        System.out.println("file length is "+bytes.length);
+        int length = bytes.length;
+        for(int i=0; i<length; i++){
+            if(i%10==0){
+                System.out.println(bytes[i]+"    "+i);
+            }else{
+                System.out.print(bytes[i]+"  ");
+            }
+        }
     }
 
     public static byte[] readFile(String fileAbsoluteName){
