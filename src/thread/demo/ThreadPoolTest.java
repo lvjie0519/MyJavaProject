@@ -13,7 +13,33 @@ public class ThreadPoolTest {
 
 //        testNewCachedThreadPool();
 //        testNewFixedThreadPool();
-        testNewScheduledThreadPool();
+//        testNewScheduledThreadPool();
+//        testNewSingleThreadExecutor();
+
+        System.out.println(Thread.currentThread().getName());
+//        new MyThread(1).start();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(Thread.currentThread().getName()+" start...");
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        System.out.println(Thread.currentThread().getName()+" start...");
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println(Thread.currentThread().getName()+" end...");
+                    }
+                }).start();
+
+                System.out.println(Thread.currentThread().getName()+" end...");
+            }
+        }).start();
 
 
     }
@@ -52,6 +78,24 @@ public class ThreadPoolTest {
         }
     }
 
+    private static void testNewSingleThreadExecutor(){
+        ExecutorService  executor =  Executors.newSingleThreadExecutor();
+        for(int i=0; i<10; i++){
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        System.out.println(Thread.currentThread().getName()+"  开始处理数据：");
+                        Thread.sleep(400);
+                        System.out.println(Thread.currentThread().getName()+"  处理结束.....");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+    }
+
 
     static class MyThread extends Thread{
 
@@ -65,7 +109,7 @@ public class ThreadPoolTest {
         public void run() {
             try {
                 System.out.println(Thread.currentThread().getName()+"  开始处理数据："+count);
-//                Thread.sleep(1000);
+                Thread.sleep(500);
                 System.out.println(Thread.currentThread().getName()+"  处理结束.....");
             } catch (Exception e) {
                 e.printStackTrace();

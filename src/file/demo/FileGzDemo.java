@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,10 +31,14 @@ public class FileGzDemo {
         System.out.println("file length is "+bytes.length);
         int length = bytes.length;
         for(int i=0; i<length; i++){
-            if(i%10==0){
-                System.out.println(bytes[i]+"    "+i);
-            }else{
+            if(i == 0){
                 System.out.print(bytes[i]+"  ");
+            }else if(i%10==0){
+                System.out.println(bytes[i]+"       文件长度到："+i);
+            }else if(i == length-1){
+                System.out.print(bytes[i]+"       文件长度到："+i);
+            }else{
+                System.out.print(bytes[i]+"   ");
             }
         }
     }
