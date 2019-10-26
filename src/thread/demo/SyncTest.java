@@ -7,6 +7,33 @@ public class SyncTest {
 
     public static void main(String []args){
 
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    long startTime = System.currentTimeMillis();
+                    System.out.println("start sleep...");
+                    Thread.sleep(2000);
+                    System.out.println("stop sleep, sleep cost: "+(System.currentTimeMillis()-startTime));
+                    System.out.println("isInterrupted: "+Thread.currentThread().isInterrupted());
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start();
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        thread.interrupt();
+
+
+
 //        MySync mySync = new MySync();
 //
 //        MyThread t1 = new MyThread(mySync);

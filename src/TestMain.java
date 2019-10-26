@@ -1,8 +1,6 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Stack;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -94,6 +92,31 @@ public class TestMain {
     }
 
     public static void main(String []args){
+        Map<String, String> mCommonSweeperViewShowMap = new HashMap<>();
+        mCommonSweeperViewShowMap.put("aaa1", "abc");
+        mCommonSweeperViewShowMap.put("aaa2", "222");
+        mCommonSweeperViewShowMap.put("aaa3", "333");
+        mCommonSweeperViewShowMap.put("aaa4", "444");
+        mCommonSweeperViewShowMap.put("aaa5", "555");
+        mCommonSweeperViewShowMap.put("aaa6", "666");
+        System.out.println(mCommonSweeperViewShowMap.toString());
+        Iterator iter = mCommonSweeperViewShowMap.entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            String key = (String) entry.getKey();
+            mCommonSweeperViewShowMap.put(key, null);
+        }
+        System.out.println(mCommonSweeperViewShowMap.toString());
+        mCommonSweeperViewShowMap.remove("aaa6");
+        System.out.println(mCommonSweeperViewShowMap.toString());
+
+        iter = mCommonSweeperViewShowMap.entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            String key = (String) entry.getKey();
+            String value = (String) entry.getValue();
+            System.out.println("key="+key+"  value="+value);
+        }
 
     }
 }
