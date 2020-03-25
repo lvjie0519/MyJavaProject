@@ -16,31 +16,33 @@ import java.util.zip.GZIPInputStream;
 public class FileGzDemo {
 
     public static void main(String []args){
-        System.out.println("hello world");
+
+////        String fileUrl = "https://raw.githubusercontent.com/lvjie0519/MRNStudyProject/master/app/src/main/res/mipmap-mdpi/ic_launcher_round.png";
+//        String fileUrl = "https://raw.githubusercontent.com/lvjie0519/MyJavaProject/master/src/file/demo/res/13";
+//        String fileAbsolutePath = "C:\\lvjie\\MyProject\\MyJavaProject\\src\\file\\demo\\res\\aaa";
+////        String fileAbsolutePath = "C:\\lvjie\\MyProject\\MyJavaProject\\src\\file\\demo\\res\\13";
+////        downloadFile(fileUrl, null, fileAbsolutePath, 6000, 6000);
+//
+//        byte[] bytes = readGzFile(fileAbsolutePath);
+////        byte[] bytes = readFile(fileAbsolutePath);
+//
+//        System.out.println("file length is "+bytes.length);
+//        int length = bytes.length;
+//        for(int i=0; i<length; i++){
+//            if(i == 0){
+//                System.out.print(bytes[i]+"  ");
+//            }else if(i%10==0){
+//                System.out.println(bytes[i]+"       文件长度到："+i);
+//            }else if(i == length-1){
+//                System.out.print(bytes[i]+"       文件长度到："+i);
+//            }else{
+//                System.out.print(bytes[i]+"   ");
+//            }
+//        }
 
 
-//        String fileUrl = "https://raw.githubusercontent.com/lvjie0519/MRNStudyProject/master/app/src/main/res/mipmap-mdpi/ic_launcher_round.png";
-        String fileUrl = "https://raw.githubusercontent.com/lvjie0519/MyJavaProject/master/src/file/demo/res/13";
-        String fileAbsolutePath = "C:\\lvjie\\MyProject\\MyJavaProject\\src\\file\\demo\\res\\aaa";
-//        String fileAbsolutePath = "C:\\lvjie\\MyProject\\MyJavaProject\\src\\file\\demo\\res\\13";
-//        downloadFile(fileUrl, null, fileAbsolutePath, 6000, 6000);
+        reNameToFile("test.txt", "text.txt");
 
-        byte[] bytes = readGzFile(fileAbsolutePath);
-//        byte[] bytes = readFile(fileAbsolutePath);
-
-        System.out.println("file length is "+bytes.length);
-        int length = bytes.length;
-        for(int i=0; i<length; i++){
-            if(i == 0){
-                System.out.print(bytes[i]+"  ");
-            }else if(i%10==0){
-                System.out.println(bytes[i]+"       文件长度到："+i);
-            }else if(i == length-1){
-                System.out.print(bytes[i]+"       文件长度到："+i);
-            }else{
-                System.out.print(bytes[i]+"   ");
-            }
-        }
     }
 
     public static byte[] readFile(String fileAbsoluteName){
@@ -203,4 +205,19 @@ public class FileGzDemo {
             }
         }
     }
+
+    // 文件重命名
+    public static void reNameToFile(String oldFileName, String newFileName){
+        String basePath = "D:\\xiaomi\\JavaProject\\MyJavaProject\\src\\file\\demo\\res";
+
+        File oldFile = new File(basePath+File.separator+oldFileName);
+        File newFile = new File(basePath+File.separator+newFileName);
+
+        if(newFile.exists()){
+            newFile.delete();
+        }
+
+        oldFile.renameTo(newFile);
+    }
+
 }
