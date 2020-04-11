@@ -41,7 +41,13 @@ public class FileGzDemo {
 //        }
 
 
-        reNameToFile("test.txt", "text.txt");
+//        reNameToFile("text1.txt", "test\\text1.txt");
+        String basePath1 = "D:\\xiaomi\\JavaProject\\MyJavaProject\\src\\file\\demo\\res\\14";
+        String basePath2 = "D:\\xiaomi\\JavaProject\\MyJavaProject\\src\\file\\demo\\res\\14";
+        String basePath = "D:\\xiaomi\\JavaProject\\MyJavaProject\\src\\file\\demo\\res\\13";
+        File file = new File(basePath);
+        System.out.println(file.getAbsolutePath());
+        System.out.println(file.getName());
 
     }
 
@@ -217,7 +223,8 @@ public class FileGzDemo {
             newFile.delete();
         }
 
-        oldFile.renameTo(newFile);
+        boolean result = oldFile.renameTo(newFile);
+        System.out.println("result="+result);
     }
 
 }
