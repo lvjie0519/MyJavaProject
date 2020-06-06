@@ -1,14 +1,18 @@
 package file.demo;
 
 import java.io.*;
+import java.util.zip.Inflater;
 
 public class FileReadWriteDemo {
 
     public static void main(String []args){
 //        readFileByFileInputStream();
 
-        readAndWrite();
+//        readAndWrite();
 
+        String path = "D:\\xiaomi\\JavaProject\\MyJavaProject\\src\\file\\demo\\res\\1213";
+        byte[] data = uncompress(new File(path));
+        System.out.println(new String(data));
     }
 
 
@@ -96,5 +100,64 @@ public class FileReadWriteDemo {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+
+    private static byte[] uncompress(File file) {
+
+        byte[] data = new byte[0];
+        try {
+            data = getBytes(new FileInputStream(file));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        byte[] output = new byte[0];
+        Inflater inflater = new Inflater();
+        inflater.reset();
+        inflater.setInput(data, 0, data.length);
+        ByteArrayOutputStream outputStream = null;
+        try {
+            outputStream = new ByteArrayOutputStream(data.length);
+            byte[] buf = new byte[1024];
+            while (!inflater.finished()) {
+                int i = inflater.inflate(buf);
+                outputStream.write(buf, 0, i);
+            }
+            output = outputStream.toByteArray();
+        } catch (Exception e) {
+            output = data;
+        } finally {
+            try {
+                if (outputStream != null) outputStream.close();
+            } catch (IOException e) {
+            }
+        }
+        inflater.end();
+        return output;
+    }
+
+    /**
+     * 获得指定文件的byte数组
+     * @param in
+     * @return
+     */
+    private static byte[] getBytes(FileInputStream in) {
+        byte[] buffer = null;
+        try {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream(1000);
+            byte[] b = new byte[1000];
+            int n;
+            while ((n = in.read(b)) != -1) {
+                bos.write(b, 0, n);
+            }
+            in.close();
+            bos.close();
+            buffer = bos.toByteArray();
+        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
+        }
+        return buffer;
     }
 }
