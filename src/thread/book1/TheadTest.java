@@ -1,18 +1,20 @@
 package thread.book1;
 
 /**
- * 1、线程启动
- * 2、线程暂停
- * 3、线程停止
- * 4、线程优先级
- * 5、线程安全
+ * 1、线程启动  -- start
+ * 2、线程暂停  -- suspend and resume
+ * 3、线程停止  -- 中断 异常
+ * 4、线程优先级 -- setPriority
+ * 5、线程安全  -- 同步
  */
 public class TheadTest {
 
     public static void main(String []args){
 
-        testThread1();
+//        testThread1();
 //        testThread5();
+
+        testThread6();
     }
 
     /**
@@ -120,4 +122,28 @@ public class TheadTest {
 //        }
     }
 
+
+    /**
+     * 测试守护线程
+     */
+    private static void testThread6(){
+        Thread6 thread6 = new Thread6();
+        /**
+         * 如果设置为守护线程， 三秒后程序退出
+         * 反正，需要等子线程运行完毕，才退出
+         */
+        thread6.setDaemon(true);        // 设置为守护线程
+        thread6.start();
+        ThreadUtils.sleep(3000);
+        System.out.println(Thread.currentThread().getName()+" will exist...");
+    }
+    private static class Thread6 extends Thread{
+        @Override
+        public void run() {
+            for(int i=0; i<10; i++){
+                ThreadUtils.sleep(1000);
+                System.out.println(Thread.currentThread().getName()+": i="+i);
+            }
+        }
+    }
 }
