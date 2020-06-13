@@ -1,6 +1,7 @@
 package thread.book1;
 
 import javax.management.relation.RelationNotFoundException;
+import java.util.Date;
 
 /**
  * 3、关键字volatile 的作用
@@ -31,13 +32,15 @@ public class VolatileTest {
                 myService.runMethod();
             }
         }).start();
-        ThreadUtils.sleep(500);
+        ThreadUtils.sleep(100);
         new Thread(new Runnable() {
             @Override
             public void run() {
                 myService.setContinueRun(false);
             }
         }).start();
+        ThreadUtils.sleep(100);
+        System.out.println(Thread.currentThread().getName()+" isContinueRun: "+myService.isContinueRun()+"...  "+new Date());
     }
 
     private static class MyService{
@@ -45,14 +48,15 @@ public class VolatileTest {
 //        private volatile boolean isContinueRun = true;   //  方法1
 
         public void runMethod(){
+            String str = new String();
             while (isContinueRun){
-//                synchronized (this){}         // 方法2
+                synchronized (this){}         // 方法2
             }
-            System.out.println(Thread.currentThread().getName()+" is stop ...");
+            System.out.println(Thread.currentThread().getName()+" is stop ..."+new Date());
         }
 
         public void setContinueRun(boolean continueRun) {
-            System.out.println(Thread.currentThread().getName()+" set continueRun is "+continueRun);
+            System.out.println(Thread.currentThread().getName()+" set continueRun is "+continueRun+"..."+new Date());
             isContinueRun = continueRun;
         }
 
