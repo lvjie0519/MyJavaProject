@@ -10,4 +10,8 @@ public class ThreadUtils {
         }
     }
 
+    public static String getName(){
+        return Thread.currentThread().getName();
+    }
+
 }
