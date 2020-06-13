@@ -6,15 +6,18 @@ import java.util.PrimitiveIterator;
 /**
  * 1、synchronized 对象监视器为 Object时的使用
  * 2、synchronized 对象监视器为 Class时的使用
+ * 3、synchronized 监视普通方法
+ * 4、synchronized 监视静态方法
+ * 5、synchronized监视 对象里面的某一变量的作用
  */
 public class SynchronizedTest {
 
     public static void main(String []args){
 //        test1();
 //        test2();
-//        testt3();
+        test3();
 //        test4();
-        test5();
+//        test5();
     }
 
 
@@ -30,43 +33,71 @@ public class SynchronizedTest {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                myObject1.methodA(Thread.currentThread().getName());
+                myObject1.method1(Thread.currentThread().getName());
             }
         }).start();
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                myObject2.methodA(Thread.currentThread().getName());
+                myObject2.method1(Thread.currentThread().getName());
             }
         }).start();
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                myObject2.methodA(Thread.currentThread().getName());
+                myObject2.method1(Thread.currentThread().getName());
             }
         }).start();
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                myObject2.methodB(Thread.currentThread().getName());
+                myObject2.method2(Thread.currentThread().getName());
             }
         }).start();
     }
 
+    /**
+     * 测试静态同步方法
+     */
     private static void test2(){
         /**
          *  synchronized 具有锁重入的能力，  也就是说当某一个线程进入同步方法后，还可以执行其他同步方法
          */
-        MyObject1 myObject2 = new MyObject1();
-        new Thread(new Runnable() {
+//        MyObject1 myObject2 = new MyObject1();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                myObject2.methodC(Thread.currentThread().getName());
+//            }
+//        }).start();
+
+        Thread thread3_1 = new Thread(new Runnable() {
             @Override
             public void run() {
-                myObject2.methodC(Thread.currentThread().getName());
+                MyObject1.method3(Thread.currentThread().getName());
             }
-        }).start();
+        }, "thread3_1");
+
+        Thread thread3_2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                MyObject1.method33(Thread.currentThread().getName());
+            }
+        }, "thread3_2");
+
+        Thread thread3_3 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                MyObject1.method33(Thread.currentThread().getName());
+            }
+        }, "thread3_3");
+
+        thread3_1.start();
+        thread3_2.start();
+        thread3_3.start();
     }
 
     /**
@@ -138,23 +169,35 @@ public class SynchronizedTest {
 
     private static class MyObject1{
 
-        synchronized public void methodA(String name){
-            System.out.println(name+": methodA  start sleep...");
+        public synchronized void method1(String name){
+            System.out.println(name+": method1  start sleep..."+new Date());
             ThreadUtils.sleep(1000);
-            System.out.println(name+": methodA  end sleep...");
+            System.out.println(name+": method1  end sleep..."+new Date());
         }
 
-        synchronized public void methodB(String name){
-            System.out.println(name+": methodB  start sleep...");
+        public synchronized void method2(String name){
+            System.out.println(name+": method2  start sleep..."+new Date());
             ThreadUtils.sleep(2000);
-            System.out.println(name+": methodB  end sleep...");
+            System.out.println(name+": method2  end sleep..."+new Date());
+        }
+
+        public static synchronized void method3(String name){
+            System.out.println(name+": method3  start sleep..."+new Date());
+            ThreadUtils.sleep(1000);
+            System.out.println(name+": method3  end sleep..."+new Date());
+        }
+
+        public static synchronized void method33(String name){
+            System.out.println(name+": method33  start sleep..."+new Date());
+            ThreadUtils.sleep(2000);
+            System.out.println(name+": method33  end sleep..."+new Date());
         }
 
         synchronized public void methodC(String name){
             System.out.println(name+": methodC  start sleep...");
             ThreadUtils.sleep(2000);
             System.out.println(name+": methodC  end sleep...");
-            methodA(name);
+            method1(name);
         }
 
 
