@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * 生产者消费者问题
+ * waite 和 notify的灵活使用
  */
 public class ProducerConsumerTest {
 
