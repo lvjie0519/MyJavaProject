@@ -10,7 +10,9 @@ public class Person {
 
     private static Person mPerson = null;
 
-    private Person(){}
+    private Person(){
+        System.out.println("new Person");
+    }
 
 //    public static Person getInstance(){
 //        if(mPerson == null){
@@ -24,6 +26,7 @@ public class Person {
 //    }
 
     public static Person getInstance(){
+        System.out.println("will new person");
         return PersonHolder.mPerson;
     }
 
