@@ -7,7 +7,7 @@ package thread.book1;
  * 4、线程优先级 -- setPriority
  * 5、线程安全  -- 同步
  */
-public class TheadTest {
+public class TheadApiTest {
 
     public static void main(String []args){
 
