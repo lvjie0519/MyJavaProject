@@ -1,6 +1,9 @@
 package file.demo;
 
 import java.io.*;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.zip.Inflater;
 
 public class FileReadWriteDemo {
@@ -10,9 +13,10 @@ public class FileReadWriteDemo {
 
 //        readAndWrite();
 
-        String path = "D:\\xiaomi\\JavaProject\\MyJavaProject\\src\\file\\demo\\res\\1213";
-        byte[] data = uncompress(new File(path));
-        System.out.println(new String(data));
+//        testUnCompress();
+
+//        testSymbolicLink(true);
+        testLink();
     }
 
 
@@ -102,7 +106,11 @@ public class FileReadWriteDemo {
         }
     }
 
-
+    private static void testUnCompress(){
+        String path = "D:\\xiaomi\\JavaProject\\MyJavaProject\\src\\file\\demo\\res\\1213";
+        byte[] data = uncompress(new File(path));
+        System.out.println(new String(data));
+    }
 
     private static byte[] uncompress(File file) {
 
@@ -159,5 +167,46 @@ public class FileReadWriteDemo {
         } catch (IOException e) {
         }
         return buffer;
+    }
+
+    /**
+     * 文件软链接, 类似快捷方式
+     */
+    private static void testSymbolicLink(boolean deleteTarget){
+
+        String linkFilePath = "D:\\xiaomi\\JavaProject\\MyJavaProject\\src\\file\\demo\\res\\12134";
+        String targetFilePath = "D:\\xiaomi\\JavaProject\\MyJavaProject\\src\\file\\demo\\res\\1213";
+
+        if(deleteTarget){
+            File file = new File(targetFilePath);
+            if(file.exists()){
+                file.delete();
+            }
+            return;
+        }
+
+        try {
+            Path path = Files.createSymbolicLink(FileSystems.getDefault().getPath(linkFilePath),
+                    FileSystems.getDefault().getPath(targetFilePath));
+            System.out.println(path.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 硬链接
+     */
+    private static void testLink(){
+        String linkFilePath = "D:\\xiaomi\\JavaProject\\MyJavaProject\\src\\file\\demo\\res\\abcde";
+        String targetFilePath = "D:\\xiaomi\\JavaProject\\MyJavaProject\\src\\file\\demo\\res\\abcd";
+
+        try {
+            Path path = Files.createLink(FileSystems.getDefault().getPath(linkFilePath),
+                    FileSystems.getDefault().getPath(targetFilePath));
+            System.out.println(path.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
