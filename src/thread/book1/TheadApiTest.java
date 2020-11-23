@@ -6,6 +6,7 @@ package thread.book1;
  * 3、线程停止  -- 中断 异常
  * 4、线程优先级 -- setPriority
  * 5、线程安全  -- 同步
+ * 6、线程等待 -- join  在A线程中调用B线程的join方法，会等待B线程执行完毕后再执行；
  */
 public class TheadApiTest {
 
@@ -14,7 +15,8 @@ public class TheadApiTest {
 //        testThread1();
 //        testThread5();
 
-        testThread6();
+//        testThread6();
+        testThread7();
     }
 
     /**
@@ -144,6 +146,40 @@ public class TheadApiTest {
                 ThreadUtils.sleep(1000);
                 System.out.println(Thread.currentThread().getName()+": i="+i);
             }
+        }
+    }
+
+    private static void testThread7(){
+        Thead7 thead7 = new Thead7();
+
+        Thread threadA = new Thread(thead7);
+        threadA.start();
+        Thread threadB = new Thread(thead7);
+        threadB.start();
+
+        try {
+            threadA.join();
+            threadB.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(thead7.getCount());
+
+    }
+    private static class Thead7 implements Runnable{
+
+        private int count = 0;
+
+        @Override
+        public void run() {
+            for(int i=0; i<10000; i++){
+                count++;
+            }
+        }
+
+        public int getCount() {
+            return count;
         }
     }
 }
